@@ -13,74 +13,118 @@ const canvasHeight = 500;
  */
 
 const letterA = {
-  "size": 80,
-  "offsetx": 0,
-  "offsety": 35
-}
+  "segments": [1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0],
+  "x": 250,
+  "y": 250,
+  "size": 50
+};
 
 const letterB = {
-  "size": 150,
-  "offsetx": 0,
-  "offsety": -145
-}
+  "segments": [1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0 ],
+  "x": 480,
+  "y": 250,
+  "size": 50
+};
 
 const letterC = {
-  "size": 100,
-  "offsetx": 30,
-  "offsety": 0
-}
+  "segments": [1, 0, 0, 1, 1, 1, 0, 0],
+  "x": 710,
+  "y": 250,
+  "size": 50
+};
 
-const backgroundColor  = "#acf2e7";
+const backgroundColor = "#0f0f0f";
 
-const darkGreen  = "#26b29d";
-const lightGreen  = "#30dfc4";
-const strokeColor  = "#0a2d27";
+const offcolor = "#211d05";
+const oncolor = "#dbc325";
+const strokeColor = "#0d0d0d";
 
-function setup () {
+function setup() {
   // create the drawing canvas, save the canvas element
   main_canvas = createCanvas(canvasWidth, canvasHeight);
   main_canvas.parent('canvasContainer');
 
   // color/stroke setup
   stroke(strokeColor);
-  strokeWeight(4);
+  strokeWeight(1);
 
   // with no animation, redrawing the screen is not necessary
   noLoop();
 }
 
-function draw () {
+function draw() {
   // clear screen
   background(backgroundColor);
-
-  // compute the center of the canvas
-  let center_x = canvasWidth / 2;
-  let center_y = canvasHeight / 1.6;
-
-  // draw the letters A, B, C from saved data
-  drawLetter(center_x - 250, center_y, letterA);
-  drawLetter(center_x      , center_y, letterB);
-  drawLetter(center_x + 250, center_y, letterC);
+  drawLetter(letterA);
+  drawLetter(letterB);
+  drawLetter(letterC);
 }
 
-function drawLetter(posx, posy, letterData) {
-  // determine parameters for second circle
-  let size2 = letterData["size"];
-  let pos2x = posx + letterData["offsetx"];
-  let pos2y = posy + letterData["offsety"];
+function drawLetter(letterData) {
+  push();
+  angleMode(DEGREES);
+  translate(letterData.x, letterData.y);
+  strokeWeight(0);
+  stroke(strokeColor);
+  let s = letterData.size;
+  let on = color(oncolor);
+  let off = color(offcolor);
 
-  // draw two circles
-  fill(darkGreen);
-  ellipse(posx, posy, 150, 150);
-  fill(lightGreen);
-  ellipse(pos2x, pos2y, size2, size2);
+  fill(letterData.segments[0] ? on : off);
+  rect(15, 0, 50, 10); // Top
+
+  fill(letterData.segments[1] ? on : off);
+  rect(70, 15, 10, 50); // Top-right
+
+  fill(letterData.segments[2] ? on : off);
+  rect(70, 75, 10, 50); // Bottom-right
+
+  fill(letterData.segments[3] ? on : off);
+  rect(15, 130, 50, 10); // Bottom
+
+  fill(letterData.segments[4] ? on : off);
+  rect(0, 75, 10, 50); // Bottom-left
+
+  fill(letterData.segments[5] ? on : off);
+  rect(0, 15, 10, 50); // Top-left
+
+  fill(letterData.segments[6] ? on : off);
+  rect(15, 65, 20, 10); // Middle-left
+
+  fill(letterData.segments[7] ? on : off);
+  rect(45, 65, 20, 10); // Middle-right
+
+  push();
+  rotate(70);
+  fill(letterData.segments[8] ? on : off);
+  rect(25, -17, 40, 10); // Cross-down top
+  pop();
+
+  push();
+  rotate(-70);
+  fill(letterData.segments[9] ? on : off);
+  rect(-38, 58, 40, 10); // Cross-up top
+  pop();
+
+  push();
+  rotate(70);
+  fill(letterData.segments[10] ? on : off);
+  rect(95, -20, 40, 10); // Cross-down bottom
+  pop();
+
+  push();
+  rotate(-70);
+  fill(letterData.segments[11] ? on : off);
+  rect(-108, 55, 40, 10); // Cross-up top
+  pop();
+
+  pop();
 }
 
 function keyTyped() {
   if (key == '!') {
     saveBlocksImages();
-  }
-  else if (key == '@') {
+  } else if (key == '@') {
     saveBlocksImages(true);
   }
 }
