@@ -13,14 +13,14 @@ const canvasHeight = 500;
  */
 
 const letterA = {
-  "segments": [1, 1, 1, 0, 1, 1, 1, 0],
+  "segments": [1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0],
   "x": 250,
   "y": 250,
   "size": 50
 };
 
 const letterB = {
-  "segments": [0, 0, 1, 1, 1, 1, 1, 0],
+  "segments": [1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0 ],
   "x": 480,
   "y": 250,
   "size": 50
@@ -53,7 +53,7 @@ function setup() {
 }
 
 function draw() {
-   // clear screen
+  // clear screen
   background(backgroundColor);
   drawLetter(letterA);
   drawLetter(letterB);
@@ -71,48 +71,51 @@ function drawLetter(letterData) {
   let off = color(offcolor);
 
   fill(letterData.segments[0] ? on : off);
-  rect(15, 0, 50, 10);      // Top
-  
+  rect(15, 0, 50, 10); // Top
+
   fill(letterData.segments[1] ? on : off);
-  rect(70, 15, 10, 50);      // Top-right
-  
+  rect(70, 15, 10, 50); // Top-right
+
   fill(letterData.segments[2] ? on : off);
-  rect(70, 75, 10, 50);      // Bottom-right
-  
+  rect(70, 75, 10, 50); // Bottom-right
+
   fill(letterData.segments[3] ? on : off);
-  rect(15, 130, 50, 10);  // Bottom
-  
+  rect(15, 130, 50, 10); // Bottom
+
   fill(letterData.segments[4] ? on : off);
-  rect(0, 75, 10, 50);      // Bottom-left
-  
+  rect(0, 75, 10, 50); // Bottom-left
+
   fill(letterData.segments[5] ? on : off);
-  rect(0, 15, 10, 50);      // Top-left
-  
+  rect(0, 15, 10, 50); // Top-left
+
   fill(letterData.segments[6] ? on : off);
-  rect(15, 65, 50, 10);      // Middle
+  rect(15, 65, 20, 10); // Middle-left
 
-  push();
-  rotate(45);
   fill(letterData.segments[7] ? on : off);
-  rect(27, -6, 55, 10);      // Cross-down top
-  pop();
+  rect(45, 65, 20, 10); // Middle-right
 
   push();
-  rotate(-45);
+  rotate(70);
   fill(letterData.segments[8] ? on : off);
-  rect(-25, 51, 55, 10);      // Cross-up top
+  rect(25, -17, 40, 10); // Cross-down top
   pop();
 
   push();
-  rotate(45);
+  rotate(-70);
   fill(letterData.segments[9] ? on : off);
-  rect(27 + 45, -6 + 45, 55, 10);      // Cross-down bottom
+  rect(-38, 58, 40, 10); // Cross-up top
   pop();
 
   push();
-  rotate(-45);
+  rotate(70);
   fill(letterData.segments[10] ? on : off);
-  rect(-25 - 45, 51 + 45, 55, 10);      // Cross-up top
+  rect(95, -20, 40, 10); // Cross-down bottom
+  pop();
+
+  push();
+  rotate(-70);
+  fill(letterData.segments[11] ? on : off);
+  rect(-108, 55, 40, 10); // Cross-up top
   pop();
 
   pop();
